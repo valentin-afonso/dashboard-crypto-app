@@ -74,6 +74,7 @@
   --sidebar-accent-foreground: oklch(0.205 0 0);
   --sidebar-border: oklch(0.922 0 0);
   --sidebar-ring: oklch(0.708 0 0);
+  --header-height: 100px;
 }
 
 .dark {
@@ -117,4 +118,20 @@
   body {
     @apply bg-background text-foreground;
   }
+}
+
+#root {
+  @apply grid min-h-screen;
+  grid-template-columns: 180px 1fr;
+  grid-template-rows: var(--header-height) 1fr;
+}
+#root > aside {
+  @apply grid row-span-full col-1;
+  grid-template-rows: var(--header-height) 1fr;
+}
+header {
+  @apply col-2 row-1;
+}
+main {
+  @apply col-2 row-2;
 }
