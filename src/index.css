@@ -126,12 +126,5 @@
   grid-template-rows: var(--header-height) 1fr;
 }
 #root > aside {
-  @apply grid row-span-full col-1;
   grid-template-rows: var(--header-height) 1fr;
-}
-header {
-  @apply col-2 row-1;
-}
-main {
-  @apply col-2 row-2;
 }

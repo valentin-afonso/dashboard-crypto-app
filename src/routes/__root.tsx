@@ -1,18 +1,14 @@
 import { createRootRoute, Outlet } from "@tanstack/react-router";
 import { TanStackRouterDevtools } from "@tanstack/react-router-devtools";
 import { SideBar } from "../components/SideBar";
+import { Header } from "../components/Header";
 
 export const Route = createRootRoute({
   component: () => (
     <>
       <SideBar />
-      <header>
-        <div className="flex justify-between">
-          <div>profil</div>
-          <div>settings</div>
-        </div>
-      </header>
-      <main>
+      <Header />
+      <main className="col-2 row-2">
         <Outlet />
       </main>
       <TanStackRouterDevtools />
