@@ -1,0 +1,15 @@
+---
+description: 
+globs: 
+alwaysApply: true
+---
+---
+Description: Backend Coding Standards
+Globs: api/**/*.ts
+---
+# Backend Guidelines
+- Always validate API inputs.
+- Use async/await consistently.
+- Follow RESTfull conventions.
+- Optimize queries for performance.
+- Log errors but avoid noisy debug logs in prod.
