@@ -1,22 +1,10 @@
 import { useQuery } from "@tanstack/react-query";
+import { fetchCoinsMarket } from "@/api/coins";
 
 export const CoinsMarket = () => {
   const { data, isLoading, error } = useQuery({
     queryKey: ["coinsMarket"],
-    queryFn: async () => {
-      const response = await fetch(
-        "https://dashboard-crypto-api.valentinafonso22.workers.dev/api/crypto/coins/markets?vs_currency=eur&sparkline=true",
-        {
-          headers: {
-            Authorization: "Bearer mFsYWZzbzpDejlxdno2ODUyNzg0MDBBZ29zdG8wOA==",
-          },
-        }
-      );
-      if (!response.ok) {
-        throw new Error("Network response was not ok");
-      }
-      return response.json();
-    },
+    queryFn: fetchCoinsMarket,
   });
 
   if (isLoading) return <div>Loading...</div>;
