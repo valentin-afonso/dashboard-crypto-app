@@ -28,7 +28,7 @@ export const ChartSparkilne = (props: ChartSparkilneProps) => {
   }));
   return (
     <>
-      <ChartContainer config={chartConfig} className="min-h-[100px] w-[100px]">
+      <ChartContainer config={chartConfig} className="min-h-[60px] w-[100px]">
         <LineChart
           accessibilityLayer
           data={chartData}

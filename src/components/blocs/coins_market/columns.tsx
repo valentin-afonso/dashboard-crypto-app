@@ -2,6 +2,7 @@ import { ColumnDef } from "@tanstack/react-table";
 import { ChartSparkilne } from "./chart-sparkilne";
 import { Button } from "@/components/ui/button";
 import { ArrowUpDown } from "lucide-react";
+import { roundNumber, formatCompactNumber } from "@/lib/number";
 
 export type Coin = {
   id: string;
@@ -60,18 +61,37 @@ export const columns: ColumnDef<Coin>[] = [
   },
   {
     accessorKey: "price_change_percentage_24h",
-    header: "Change",
+    header: ({ column }) => {
+      return (
+        <Button
+          variant="ghost"
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+        >
+          Change
+          <ArrowUpDown className="ml-2 h-4 w-4" />
+        </Button>
+      );
+    },
     cell: ({ row }) => {
-      return <div>{row.getValue("price_change_percentage_24h")} %</div>;
+      const value = row.getValue("price_change_percentage_24h") as number;
+      return <div>{roundNumber(value)} %</div>;
     },
   },
   {
     accessorKey: "market_cap",
     header: "Market cap",
+    cell: ({ row }) => {
+      const value = row.getValue("market_cap") as number;
+      return <div>${formatCompactNumber(value)}</div>;
+    },
   },
   {
     accessorKey: "total_volume",
     header: "Volume",
+    cell: ({ row }) => {
+      const value = row.getValue("total_volume") as number;
+      return <div>${formatCompactNumber(value)}</div>;
+    },
   },
   {
     accessorKey: "sparkline_in_7d",
