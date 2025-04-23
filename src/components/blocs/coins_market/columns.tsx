@@ -79,7 +79,17 @@ export const columns: ColumnDef<Coin>[] = [
   },
   {
     accessorKey: "market_cap",
-    header: "Market cap",
+    header: ({ column }) => {
+      return (
+        <Button
+          variant="ghost"
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+        >
+          Market cap
+          <ArrowUpDown className="ml-2 h-4 w-4" />
+        </Button>
+      );
+    },
     cell: ({ row }) => {
       const value = row.getValue("market_cap") as number;
       return <div>${formatCompactNumber(value)}</div>;
@@ -87,7 +97,17 @@ export const columns: ColumnDef<Coin>[] = [
   },
   {
     accessorKey: "total_volume",
-    header: "Volume",
+    header: ({ column }) => {
+      return (
+        <Button
+          variant="ghost"
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+        >
+          Volume
+          <ArrowUpDown className="ml-2 h-4 w-4" />
+        </Button>
+      );
+    },
     cell: ({ row }) => {
       const value = row.getValue("total_volume") as number;
       return <div>${formatCompactNumber(value)}</div>;
