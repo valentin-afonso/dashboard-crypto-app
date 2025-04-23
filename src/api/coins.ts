@@ -13,3 +13,19 @@ export const fetchCoinsMarket = async () => {
   }
   return response.json();
 };
+
+export const fetchCoinMarket = async () => {
+  const response = await fetch(
+    `${import.meta.env.VITE_HONO_API_PATH}/api/crypto/coins/bitcoin/markets?vs_currency=eur&days=7`,
+    {
+      headers: {
+        Authorization: `Bearer ${import.meta.env.VITE_HONO_API_KEY}`,
+      },
+    }
+  );
+
+  if (!response.ok) {
+    throw new Error("Network response was not ok");
+  }
+  return response.json();
+};
