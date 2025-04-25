@@ -8,8 +8,10 @@ export const Route = createFileRoute("/")({
 
 function Index() {
   return (
-    <div className="p-2">
-      <CoinTeaser />
+    <div className="flex flex-col gap-2 p-2">
+      <div className="grid grid-cols-3 gap-2">
+        <CoinTeaser />
+      </div>
       <CoinsMarket />
     </div>
   );

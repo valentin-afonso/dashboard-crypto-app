@@ -115,7 +115,7 @@ export const columns: ColumnDef<Coin>[] = [
   },
   {
     accessorKey: "sparkline_in_7d",
-    header: "Sparkline",
+    header: "Chart",
     cell: ({ row }) => {
       const sparkline = row.original.sparkline_in_7d.price;
       return (
