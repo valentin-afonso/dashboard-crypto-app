@@ -2,7 +2,7 @@ import { Link } from "@tanstack/react-router";
 
 export function MainNav() {
   return (
-    <nav className="row-2 p-2 flex gap-2">
+    <nav className="row-2 p-2 flex gap-2 text-black">
       <ul className="w-full">
         <li>
           <Link

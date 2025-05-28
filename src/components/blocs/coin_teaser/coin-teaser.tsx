@@ -20,8 +20,8 @@ const COINS = [
 
 const DAYS = [1, 7, 14, 30];
 
-export const CoinTeaser = () => {
-  const [selectedCoin, setSelectedCoin] = useState("bitcoin");
+export const CoinTeaser = ({ defaultCoin }: { defaultCoin: string }) => {
+  const [selectedCoin, setSelectedCoin] = useState(defaultCoin);
   const [selectedDays, setSelectedDays] = useState(7);
 
   const { data, isLoading, error } = useQuery({
@@ -47,12 +47,12 @@ export const CoinTeaser = () => {
     }));
 
   return (
-    <Card className="w-full min-h-[364px] pb-0">
-      <CardHeader>
+    <Card className="w-full min-h-[300px] pb-0 pt-1.5">
+      <CardHeader className="px-1.5">
         <div className="flex justify-between items-center">
           <CardTitle>
             <Select value={selectedCoin} onValueChange={setSelectedCoin}>
-              <SelectTrigger className="w-[180px]">
+              <SelectTrigger className="w-[150px]">
                 <SelectValue placeholder="Select a coin" />
               </SelectTrigger>
               <SelectContent>
@@ -68,7 +68,7 @@ export const CoinTeaser = () => {
             value={selectedDays.toString()}
             onValueChange={(value) => setSelectedDays(Number(value))}
           >
-            <SelectTrigger className="w-[100px]">
+            <SelectTrigger className="w-[120px]">
               <SelectValue placeholder="Days" />
             </SelectTrigger>
             <SelectContent>
@@ -80,7 +80,7 @@ export const CoinTeaser = () => {
             </SelectContent>
           </Select>
         </div>
-        <p className="text-2xl font-bold">
+        <p className="text-2xl font-bold pt-2">
           ${data.prices[data.prices.length - 1][1].toFixed(2)}
         </p>
       </CardHeader>

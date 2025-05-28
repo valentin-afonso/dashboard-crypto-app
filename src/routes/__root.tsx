@@ -8,7 +8,7 @@ export const Route = createRootRoute({
     <>
       <SideBar />
       <Header />
-      <main className="col-2 row-2">
+      <main className="col-2 row-2 bg-color-background">
         <Outlet />
       </main>
       <TanStackRouterDevtools />

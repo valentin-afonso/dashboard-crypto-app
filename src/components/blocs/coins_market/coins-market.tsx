@@ -2,6 +2,7 @@ import { useQuery } from "@tanstack/react-query";
 import { fetchCoinsMarket } from "@/api/coins";
 import { columns } from "./columns";
 import { DataTable } from "./data-table";
+import { Card } from "@/components/ui/card";
 
 export const CoinsMarket = () => {
   const { data, isLoading, error } = useQuery({
@@ -13,8 +14,10 @@ export const CoinsMarket = () => {
   if (error) return <div>Error: {error.message}</div>;
 
   return (
-    <div className="col-2 row-2 bg-gray-200">
-      <DataTable columns={columns} data={data} />
-    </div>
+    <>
+      <Card className="col-2 row-2">
+        <DataTable columns={columns} data={data} />
+      </Card>
+    </>
   );
 };
