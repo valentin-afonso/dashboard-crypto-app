@@ -1,4 +1,4 @@
-import { Area, AreaChart, CartesianGrid, XAxis, YAxis } from "recharts";
+import { Line, LineChart, XAxis, YAxis } from "recharts";
 import {
   ChartConfig,
   ChartContainer,
@@ -21,8 +21,14 @@ export const ChartSParklineTeaser = ({
   return (
     <div>
       <ChartContainer config={chartConfig} className="min-h-[100px]">
-        <AreaChart accessibilityLayer data={chartData}>
-          <CartesianGrid vertical={false} horizontal={false} />
+        <LineChart
+          accessibilityLayer
+          data={chartData}
+          margin={{
+            left: 12,
+            right: 12,
+          }}
+        >
           <XAxis
             dataKey="time"
             tickLine={false}
@@ -30,8 +36,7 @@ export const ChartSParklineTeaser = ({
             hide={true}
             tickFormatter={(value) => value.slice(0, 3)}
           />
-          <YAxis hide domain={["dataMin * 0.99", "dataMax * 1.01"]} />
-
+          <YAxis hide domain={["dataMin * 0.97", "dataMax * 1.03"]} />
           <ChartTooltip
             cursor={false}
             content={({ active, payload }) => {
@@ -50,29 +55,14 @@ export const ChartSParklineTeaser = ({
               return null;
             }}
           />
-          <defs>
-            <linearGradient id="fillMobile" x1="0" y1="0" x2="0" y2="1">
-              <stop
-                offset="5%"
-                stopColor="var(--color-mobile)"
-                stopOpacity={0.8}
-              />
-              <stop
-                offset="95%"
-                stopColor="var(--color-mobile)"
-                stopOpacity={0}
-              />
-            </linearGradient>
-          </defs>
-          <Area
+          <Line
             dataKey="price"
             type="natural"
-            fill="url(#fillMobile)"
-            fillOpacity={0.4}
-            stroke="var(--color-mobile)"
-            stackId="a"
+            stroke="black"
+            strokeWidth={2}
+            dot={false}
           />
-        </AreaChart>
+        </LineChart>
       </ChartContainer>
     </div>
   );
