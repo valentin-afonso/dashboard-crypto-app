@@ -1,11 +1,7 @@
-import {
-  ChartContainer,
-  ChartTooltip,
-  ChartTooltipContent,
-} from "@/components/ui/chart";
+import { ChartContainer } from "@/components/ui/chart";
 
 import { type ChartConfig } from "@/components/ui/chart";
-import { LineChart, CartesianGrid, XAxis, Line, YAxis } from "recharts";
+import { LineChart, XAxis, Line, YAxis } from "recharts";
 
 const chartConfig = {
   sparkline_price: {
@@ -27,6 +23,14 @@ export const ChartSparkilne = (props: ChartSparkilneProps) => {
     index,
     sparkline_price: price,
   }));
+
+  // determine the color of the line based on the trend
+  const isNegative =
+    chartData.length > 1 &&
+    chartData[chartData.length - 1].sparkline_price <
+      chartData[0].sparkline_price;
+  const strokeColor = isNegative ? "#ff5252" : "#60e760";
+
   return (
     <>
       <ChartContainer config={chartConfig} className="min-h-[60px] w-[100px]">
@@ -38,7 +42,6 @@ export const ChartSparkilne = (props: ChartSparkilneProps) => {
             right: 12,
           }}
         >
-          <CartesianGrid vertical={false} />
           <XAxis
             dataKey="month"
             tickLine={false}
@@ -47,14 +50,11 @@ export const ChartSparkilne = (props: ChartSparkilneProps) => {
             tickFormatter={(value) => value.slice(0, 3)}
           />
           <YAxis hide domain={["dataMin * 0.97", "dataMax * 1.03"]} />
-          <ChartTooltip
-            cursor={false}
-            content={<ChartTooltipContent hideLabel />}
-          />
+
           <Line
             dataKey="sparkline_price"
             type="natural"
-            stroke="black"
+            stroke={strokeColor}
             strokeWidth={2}
             dot={false}
           />
