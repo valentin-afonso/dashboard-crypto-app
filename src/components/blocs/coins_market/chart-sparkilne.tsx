@@ -38,6 +38,7 @@ export const ChartSparkilne = (props: ChartSparkilneProps) => {
           accessibilityLayer
           data={chartData}
           margin={{
+            top: 12,
             left: 12,
             right: 12,
           }}

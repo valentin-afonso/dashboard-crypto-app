@@ -1,5 +1,3 @@
-import { fetchCoinMarket } from "@/api/coins";
-import { useQuery } from "@tanstack/react-query";
 import { ChartSParklineTeaser } from "./chart-sparkline-teaser";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import {
@@ -22,32 +20,10 @@ const DAYS = [1, 7, 14, 30];
 
 export const CoinTeaser = ({ defaultCoin }: { defaultCoin: string }) => {
   const [selectedCoin, setSelectedCoin] = useState(defaultCoin);
-  const [selectedDays, setSelectedDays] = useState(7);
-
-  const { data, isLoading, error } = useQuery({
-    queryKey: ["coinMarket", selectedCoin, selectedDays],
-    queryFn: () => fetchCoinMarket(selectedCoin, selectedDays),
-  });
-
-  if (isLoading) return <div>Loading...</div>;
-  if (error) return <div>Error: {error.message}</div>;
-
-  const chartData = data.prices
-    .filter((_: unknown, index: number) => {
-      if (selectedDays <= 7) {
-        return true; // Show all data points for 1-7 days
-      } else {
-        return index % 24 === 0; // Show one point per day for >7 days
-      }
-    })
-    .map(([timestamp, price]: [number, number]) => ({
-      timestamp,
-      time: new Date(timestamp).toLocaleTimeString(),
-      price,
-    }));
+  const [selectedDays, setSelectedDays] = useState(14);
 
   return (
-    <Card className="w-full min-h-[300px] pb-0 pt-1.5">
+    <Card className="w-full min-h-[300px] pb-0 pt-1.5 gap-0">
       <CardHeader className="px-1.5">
         <div className="flex justify-between items-center">
           <CardTitle>
@@ -80,12 +56,12 @@ export const CoinTeaser = ({ defaultCoin }: { defaultCoin: string }) => {
             </SelectContent>
           </Select>
         </div>
-        <p className="text-2xl font-bold pt-2">
-          ${data.prices[data.prices.length - 1][1].toFixed(2)}
-        </p>
       </CardHeader>
       <CardContent className="p-0">
-        <ChartSParklineTeaser chartData={chartData} />
+        <ChartSParklineTeaser
+          selectedDays={selectedDays}
+          selectedCoin={selectedCoin}
+        />
       </CardContent>
     </Card>
   );

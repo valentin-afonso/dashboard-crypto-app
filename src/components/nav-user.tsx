@@ -26,7 +26,7 @@ export const NavUser = () => {
         <DropdownMenuTrigger asChild>
           <Button
             size="lg"
-            className="bg-sidebar-accent hover:bg-sidebar-accent text-sidebar-accent-foreground"
+            className="bg-background hover:bg-foreground text-sidebar-accent-foreground border border-color-border px-0"
           >
             <Avatar className="h-8 w-8 rounded-lg">
               <AvatarImage src="/avatars/shadcn.jpg" alt="valentin afso" />
