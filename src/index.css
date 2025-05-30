@@ -162,3 +162,16 @@ body {
 .coin_teaser button span {
   @apply text-xs;
 }
+
+table tr th:has(.only_mobile),
+table tr td:has(.only_mobile) {
+  @apply table-cell sm:hidden;
+}
+
+table tr th:has(.only_desktop),
+table tr td:has(.only_desktop) {
+  @apply hidden sm:table-cell;
+}
+table tr th {
+  @apply text-xs sm:text-sm;
+}

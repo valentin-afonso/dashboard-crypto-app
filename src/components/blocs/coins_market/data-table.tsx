@@ -63,7 +63,7 @@ export function DataTable<TData, TValue>({
           className="max-w-sm"
         />
       </CardHeader>
-      <CardContent>
+      <CardContent className="p-0 sm:p-4">
         <Table>
           <TableHeader>
             {table.getHeaderGroups().map((headerGroup) => (
