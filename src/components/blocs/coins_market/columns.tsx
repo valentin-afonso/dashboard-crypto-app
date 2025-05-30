@@ -26,7 +26,7 @@ export const columns: ColumnDef<Coin>[] = [
       const img = row.original.image;
       const symbol = row.original.symbol;
       return (
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-2 w-max">
           <img
             src={img}
             alt={symbol}
