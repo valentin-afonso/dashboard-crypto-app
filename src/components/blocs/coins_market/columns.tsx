@@ -3,6 +3,7 @@ import { ChartSparkilne } from "./chart-sparkilne";
 import { Button } from "@/components/ui/button";
 import { ArrowUpDown } from "lucide-react";
 import { roundNumber, formatCompactNumber } from "@/lib/number";
+import { Link } from "@tanstack/react-router";
 
 export type Coin = {
   id: string;
@@ -23,6 +24,7 @@ export const columns: ColumnDef<Coin>[] = [
     accessorKey: "name",
     header: () => <div>Asset Name</div>,
     cell: ({ row }) => {
+      const id = row.original.id;
       const img = row.original.image;
       const symbol = row.original.symbol;
       return (
@@ -34,10 +36,14 @@ export const columns: ColumnDef<Coin>[] = [
             height={100}
             className="w-[28px] h-[28px] sm:w-[40px] sm:h-[40px]"
           />
-          <div className="flex flex-col font-medium">
+          <Link
+            to="/coins/$coinId"
+            params={{ coinId: id }}
+            className="flex flex-col font-medium"
+          >
             <span className="text-sm">{row.getValue("name")}</span>
             <span className="text-xs">{symbol}</span>
-          </div>
+          </Link>
         </div>
       );
     },

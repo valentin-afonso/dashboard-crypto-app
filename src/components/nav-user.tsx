@@ -33,8 +33,8 @@ export const NavUser = () => {
               <AvatarFallback className="rounded-lg">VA</AvatarFallback>
             </Avatar>
             <div className="grid flex-1 text-left text-sm leading-tight">
-              <span className="truncate font-semibold">valentin afso</span>
-              <span className="truncate text-xs">v.afonso@gmail.com</span>
+              <span className="truncate font-semibold">valafso</span>
+              <span className="truncate text-xs">hello@valafso.com</span>
             </div>
             <ChevronsUpDown className="ml-auto size-4" />
           </Button>

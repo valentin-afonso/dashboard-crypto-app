@@ -25,3 +25,17 @@ export const fetchCoinsMarket = async () => {
   }
   return response.json();
 };
+export const fetchCoin = async (coinId: string = "bitcoin") => {
+  const response = await fetch(
+    `${import.meta.env.VITE_HONO_API_PATH}/api/crypto/coins/${coinId}`,
+    {
+      headers: {
+        Authorization: `Bearer ${import.meta.env.VITE_HONO_API_KEY}`,
+      },
+    }
+  );
+  if (!response.ok) {
+    throw new Error("Failed to fetch coin details");
+  }
+  return response.json();
+};
