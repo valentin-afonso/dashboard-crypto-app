@@ -10,123 +10,142 @@
 
 // Import Routes
 
-import { Route as rootRoute } from "./routes/__root";
-import { Route as AboutImport } from "./routes/about";
-import { Route as IndexImport } from "./routes/index";
-import { Route as CoinsIndexImport } from "./routes/coins/index";
-import { Route as CoinsCoinIdImport } from "./routes/coins/$coinId";
+import { Route as rootRoute } from './routes/__root'
+import { Route as AboutImport } from './routes/about'
+import { Route as IndexImport } from './routes/index'
+import { Route as CoinsIndexImport } from './routes/coins/index'
+import { Route as CalcIndexImport } from './routes/calc/index'
+import { Route as CoinsCoinIdImport } from './routes/coins/$coinId'
 
 // Create/Update Routes
 
 const AboutRoute = AboutImport.update({
-  id: "/about",
-  path: "/about",
+  id: '/about',
+  path: '/about',
   getParentRoute: () => rootRoute,
-} as any);
+} as any)
 
 const IndexRoute = IndexImport.update({
-  id: "/",
-  path: "/",
+  id: '/',
+  path: '/',
   getParentRoute: () => rootRoute,
-} as any);
+} as any)
 
 const CoinsIndexRoute = CoinsIndexImport.update({
-  id: "/coins/",
-  path: "/coins/",
+  id: '/coins/',
+  path: '/coins/',
   getParentRoute: () => rootRoute,
-} as any);
+} as any)
+
+const CalcIndexRoute = CalcIndexImport.update({
+  id: '/calc/',
+  path: '/calc/',
+  getParentRoute: () => rootRoute,
+} as any)
 
 const CoinsCoinIdRoute = CoinsCoinIdImport.update({
-  id: "/coins/$coinId",
-  path: "/coins/$coinId",
+  id: '/coins/$coinId',
+  path: '/coins/$coinId',
   getParentRoute: () => rootRoute,
-} as any);
+} as any)
 
 // Populate the FileRoutesByPath interface
 
-declare module "@tanstack/react-router" {
+declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
-    "/": {
-      id: "/";
-      path: "/";
-      fullPath: "/";
-      preLoaderRoute: typeof IndexImport;
-      parentRoute: typeof rootRoute;
-    };
-    "/about": {
-      id: "/about";
-      path: "/about";
-      fullPath: "/about";
-      preLoaderRoute: typeof AboutImport;
-      parentRoute: typeof rootRoute;
-    };
-    "/coins/$coinId": {
-      id: "/coins/$coinId";
-      path: "/coins/$coinId";
-      fullPath: "/coins/$coinId";
-      preLoaderRoute: typeof CoinsCoinIdImport;
-      parentRoute: typeof rootRoute;
-    };
-    "/coins/": {
-      id: "/coins/";
-      path: "/coins";
-      fullPath: "/coins";
-      preLoaderRoute: typeof CoinsIndexImport;
-      parentRoute: typeof rootRoute;
-    };
+    '/': {
+      id: '/'
+      path: '/'
+      fullPath: '/'
+      preLoaderRoute: typeof IndexImport
+      parentRoute: typeof rootRoute
+    }
+    '/about': {
+      id: '/about'
+      path: '/about'
+      fullPath: '/about'
+      preLoaderRoute: typeof AboutImport
+      parentRoute: typeof rootRoute
+    }
+    '/coins/$coinId': {
+      id: '/coins/$coinId'
+      path: '/coins/$coinId'
+      fullPath: '/coins/$coinId'
+      preLoaderRoute: typeof CoinsCoinIdImport
+      parentRoute: typeof rootRoute
+    }
+    '/calc/': {
+      id: '/calc/'
+      path: '/calc'
+      fullPath: '/calc'
+      preLoaderRoute: typeof CalcIndexImport
+      parentRoute: typeof rootRoute
+    }
+    '/coins/': {
+      id: '/coins/'
+      path: '/coins'
+      fullPath: '/coins'
+      preLoaderRoute: typeof CoinsIndexImport
+      parentRoute: typeof rootRoute
+    }
   }
 }
 
 // Create and export the route tree
 
 export interface FileRoutesByFullPath {
-  "/": typeof IndexRoute;
-  "/about": typeof AboutRoute;
-  "/coins/$coinId": typeof CoinsCoinIdRoute;
-  "/coins": typeof CoinsIndexRoute;
+  '/': typeof IndexRoute
+  '/about': typeof AboutRoute
+  '/coins/$coinId': typeof CoinsCoinIdRoute
+  '/calc': typeof CalcIndexRoute
+  '/coins': typeof CoinsIndexRoute
 }
 
 export interface FileRoutesByTo {
-  "/": typeof IndexRoute;
-  "/about": typeof AboutRoute;
-  "/coins/$coinId": typeof CoinsCoinIdRoute;
-  "/coins": typeof CoinsIndexRoute;
+  '/': typeof IndexRoute
+  '/about': typeof AboutRoute
+  '/coins/$coinId': typeof CoinsCoinIdRoute
+  '/calc': typeof CalcIndexRoute
+  '/coins': typeof CoinsIndexRoute
 }
 
 export interface FileRoutesById {
-  __root__: typeof rootRoute;
-  "/": typeof IndexRoute;
-  "/about": typeof AboutRoute;
-  "/coins/$coinId": typeof CoinsCoinIdRoute;
-  "/coins/": typeof CoinsIndexRoute;
+  __root__: typeof rootRoute
+  '/': typeof IndexRoute
+  '/about': typeof AboutRoute
+  '/coins/$coinId': typeof CoinsCoinIdRoute
+  '/calc/': typeof CalcIndexRoute
+  '/coins/': typeof CoinsIndexRoute
 }
 
 export interface FileRouteTypes {
-  fileRoutesByFullPath: FileRoutesByFullPath;
-  fullPaths: "/" | "/about" | "/coins/$coinId" | "/coins";
-  fileRoutesByTo: FileRoutesByTo;
-  to: "/" | "/about" | "/coins/$coinId" | "/coins";
-  id: "__root__" | "/" | "/about" | "/coins/$coinId" | "/coins/";
-  fileRoutesById: FileRoutesById;
+  fileRoutesByFullPath: FileRoutesByFullPath
+  fullPaths: '/' | '/about' | '/coins/$coinId' | '/calc' | '/coins'
+  fileRoutesByTo: FileRoutesByTo
+  to: '/' | '/about' | '/coins/$coinId' | '/calc' | '/coins'
+  id: '__root__' | '/' | '/about' | '/coins/$coinId' | '/calc/' | '/coins/'
+  fileRoutesById: FileRoutesById
 }
 
 export interface RootRouteChildren {
-  IndexRoute: typeof IndexRoute;
-  AboutRoute: typeof AboutRoute;
-  CoinsCoinIdRoute: typeof CoinsCoinIdRoute;
-  CoinsIndexRoute: typeof CoinsIndexRoute;
+  IndexRoute: typeof IndexRoute
+  AboutRoute: typeof AboutRoute
+  CoinsCoinIdRoute: typeof CoinsCoinIdRoute
+  CalcIndexRoute: typeof CalcIndexRoute
+  CoinsIndexRoute: typeof CoinsIndexRoute
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AboutRoute: AboutRoute,
   CoinsCoinIdRoute: CoinsCoinIdRoute,
+  CalcIndexRoute: CalcIndexRoute,
   CoinsIndexRoute: CoinsIndexRoute,
-};
+}
 
 export const routeTree = rootRoute
   ._addFileChildren(rootRouteChildren)
-  ._addFileTypes<FileRouteTypes>();
+  ._addFileTypes<FileRouteTypes>()
 
 /* ROUTE_MANIFEST_START
 {
@@ -137,6 +156,7 @@ export const routeTree = rootRoute
         "/",
         "/about",
         "/coins/$coinId",
+        "/calc/",
         "/coins/"
       ]
     },
@@ -148,6 +168,9 @@ export const routeTree = rootRoute
     },
     "/coins/$coinId": {
       "filePath": "coins/$coinId.tsx"
+    },
+    "/calc/": {
+      "filePath": "calc/index.tsx"
     },
     "/coins/": {
       "filePath": "coins/index.tsx"

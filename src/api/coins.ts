@@ -39,3 +39,18 @@ export const fetchCoin = async (coinId: string = "bitcoin") => {
   }
   return response.json();
 };
+export const postCalc = async (ccy1: string = "BTC", ccy2: string = "BTC") => {
+  const response = await fetch(
+    `${import.meta.env.VITE_HONO_API_PATH}/api//crypto-bitfinex/calc/fx?ccy1=${ccy1}&ccy2=${ccy2}`,
+    {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${import.meta.env.VITE_HONO_API_KEY}`,
+      },
+    }
+  );
+  if (!response.ok) {
+    throw new Error("Failed to fetch coin details");
+  }
+  return response.json();
+};
