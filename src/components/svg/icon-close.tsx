@@ -1,4 +1,4 @@
-export const IconCalc = () => {
+export const IconClose = () => {
   return (
     <svg
       width="28"
@@ -10,13 +10,10 @@ export const IconCalc = () => {
       strokeWidth="1.5"
       viewBox="0 0 24 24"
       xmlns="http://www.w3.org/2000/svg"
-      className="w-[22px] h-[22px]"
     >
-      <path d="M16 4h4v4"></path>
-      <path d="m15 9 5-5"></path>
-      <path d="m4 20 5-5"></path>
-      <path d="M16 20h4v-4"></path>
-      <path d="m4 4 16 16"></path>
+      <path d="M21 12c0-4.969-4.031-9-9-9s-9 4.031-9 9 4.031 9 9 9 9-4.031 9-9Z"></path>
+      <path d="M15 15 9 9"></path>
+      <path d="m9 15 6-6"></path>
     </svg>
   );
 };
