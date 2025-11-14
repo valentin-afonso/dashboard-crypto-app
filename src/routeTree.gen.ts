@@ -11,6 +11,7 @@
 // Import Routes
 
 import { Route as rootRoute } from './routes/__root'
+import { Route as SettingsImport } from './routes/settings'
 import { Route as AboutImport } from './routes/about'
 import { Route as IndexImport } from './routes/index'
 import { Route as CoinsIndexImport } from './routes/coins/index'
@@ -18,6 +19,12 @@ import { Route as CalcIndexImport } from './routes/calc/index'
 import { Route as CoinsCoinIdImport } from './routes/coins/$coinId'
 
 // Create/Update Routes
+
+const SettingsRoute = SettingsImport.update({
+  id: '/settings',
+  path: '/settings',
+  getParentRoute: () => rootRoute,
+} as any)
 
 const AboutRoute = AboutImport.update({
   id: '/about',
@@ -67,6 +74,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AboutImport
       parentRoute: typeof rootRoute
     }
+    '/settings': {
+      id: '/settings'
+      path: '/settings'
+      fullPath: '/settings'
+      preLoaderRoute: typeof SettingsImport
+      parentRoute: typeof rootRoute
+    }
     '/coins/$coinId': {
       id: '/coins/$coinId'
       path: '/coins/$coinId'
@@ -96,6 +110,7 @@ declare module '@tanstack/react-router' {
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
+  '/settings': typeof SettingsRoute
   '/coins/$coinId': typeof CoinsCoinIdRoute
   '/calc': typeof CalcIndexRoute
   '/coins': typeof CoinsIndexRoute
@@ -104,6 +119,7 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
+  '/settings': typeof SettingsRoute
   '/coins/$coinId': typeof CoinsCoinIdRoute
   '/calc': typeof CalcIndexRoute
   '/coins': typeof CoinsIndexRoute
@@ -113,6 +129,7 @@ export interface FileRoutesById {
   __root__: typeof rootRoute
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
+  '/settings': typeof SettingsRoute
   '/coins/$coinId': typeof CoinsCoinIdRoute
   '/calc/': typeof CalcIndexRoute
   '/coins/': typeof CoinsIndexRoute
@@ -120,16 +137,30 @@ export interface FileRoutesById {
 
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/about' | '/coins/$coinId' | '/calc' | '/coins'
+  fullPaths:
+    | '/'
+    | '/about'
+    | '/settings'
+    | '/coins/$coinId'
+    | '/calc'
+    | '/coins'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/about' | '/coins/$coinId' | '/calc' | '/coins'
-  id: '__root__' | '/' | '/about' | '/coins/$coinId' | '/calc/' | '/coins/'
+  to: '/' | '/about' | '/settings' | '/coins/$coinId' | '/calc' | '/coins'
+  id:
+    | '__root__'
+    | '/'
+    | '/about'
+    | '/settings'
+    | '/coins/$coinId'
+    | '/calc/'
+    | '/coins/'
   fileRoutesById: FileRoutesById
 }
 
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AboutRoute: typeof AboutRoute
+  SettingsRoute: typeof SettingsRoute
   CoinsCoinIdRoute: typeof CoinsCoinIdRoute
   CalcIndexRoute: typeof CalcIndexRoute
   CoinsIndexRoute: typeof CoinsIndexRoute
@@ -138,6 +169,7 @@ export interface RootRouteChildren {
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AboutRoute: AboutRoute,
+  SettingsRoute: SettingsRoute,
   CoinsCoinIdRoute: CoinsCoinIdRoute,
   CalcIndexRoute: CalcIndexRoute,
   CoinsIndexRoute: CoinsIndexRoute,
@@ -155,6 +187,7 @@ export const routeTree = rootRoute
       "children": [
         "/",
         "/about",
+        "/settings",
         "/coins/$coinId",
         "/calc/",
         "/coins/"
@@ -165,6 +198,9 @@ export const routeTree = rootRoute
     },
     "/about": {
       "filePath": "about.tsx"
+    },
+    "/settings": {
+      "filePath": "settings.tsx"
     },
     "/coins/$coinId": {
       "filePath": "coins/$coinId.tsx"

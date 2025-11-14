@@ -49,7 +49,7 @@ export const columns: ColumnDef<Coin>[] = [
     },
   },
   {
-    accessorKey: "current_price",
+    accessorKey: "current_price_mobile",
     header: () => <div className="only_mobile">Current Price</div>,
     cell: ({ row }) => {
       const change = row.original.price_change_percentage_24h;

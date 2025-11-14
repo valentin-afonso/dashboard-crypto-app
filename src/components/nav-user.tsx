@@ -4,88 +4,67 @@ import {
   DropdownMenuContent,
   DropdownMenuGroup,
   DropdownMenuItem,
-  DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { Button } from "@/components/ui/button";
-import {
-  ChevronsUpDown,
-  Sparkles,
-  BadgeCheck,
-  CreditCard,
-  Bell,
-  LogOut,
-} from "lucide-react";
-
+import { Sparkles, BadgeCheck, CreditCard, Bell, LogOut } from "lucide-react";
+import { IconEllipsis } from "./svg/icon-ellipsis";
 export const NavUser = () => {
   const isMobile = false;
   return (
     <>
-      <DropdownMenu>
-        <DropdownMenuTrigger asChild>
-          <Button
-            size="lg"
-            className="bg-background hover:bg-foreground text-sidebar-accent-foreground border border-color-border px-0"
-          >
-            <Avatar className="h-8 w-8 rounded-lg">
-              <AvatarImage src="/avatars/shadcn.jpg" alt="valentin afso" />
-              <AvatarFallback className="rounded-lg">VA</AvatarFallback>
-            </Avatar>
-            <div className="grid flex-1 text-left text-sm leading-tight">
-              <span className="truncate font-semibold">valafso</span>
-              <span className="truncate text-xs">hello@valafso.com</span>
-            </div>
-            <ChevronsUpDown className="ml-auto size-4" />
-          </Button>
-        </DropdownMenuTrigger>
-        <DropdownMenuContent
-          className="w-[--radix-dropdown-menu-trigger-width] min-w-56 rounded-lg"
-          side={isMobile ? "bottom" : "right"}
-          align="end"
-          sideOffset={4}
-        >
-          <DropdownMenuLabel className="p-0 font-normal">
-            <div className="flex items-center gap-2 px-1 py-1.5 text-left text-sm">
-              <Avatar className="h-8 w-8 rounded-lg">
-                <AvatarImage src="/avatars/shadcn.jpg" alt="valentin afso" />
-                <AvatarFallback className="rounded-lg">VA</AvatarFallback>
-              </Avatar>
-              <div className="grid flex-1 text-left text-sm leading-tight">
-                <span className="truncate font-semibold">valentin afso</span>
-                <span className="truncate text-xs">v.afonso@gmail.com</span>
-              </div>
-            </div>
-          </DropdownMenuLabel>
-          <DropdownMenuSeparator />
-          <DropdownMenuGroup>
-            <DropdownMenuItem>
-              <Sparkles />
-              Upgrade to Pro
-            </DropdownMenuItem>
-          </DropdownMenuGroup>
-          <DropdownMenuSeparator />
-          <DropdownMenuGroup>
-            <DropdownMenuItem>
-              <BadgeCheck />
-              Account
-            </DropdownMenuItem>
-            <DropdownMenuItem>
-              <CreditCard />
-              Billing
-            </DropdownMenuItem>
-            <DropdownMenuItem>
-              <Bell />
-              Notifications
-            </DropdownMenuItem>
-          </DropdownMenuGroup>
-          <DropdownMenuSeparator />
-          <DropdownMenuItem>
-            <LogOut />
-            Log out
-          </DropdownMenuItem>
-        </DropdownMenuContent>
-      </DropdownMenu>
+      <div className="flex items-center gap-2 text-black max-w-full">
+        <Avatar className="h-6 w-6 rounded-full">
+          <AvatarImage src="/avatars/shadcn.jpg" alt="valentin afso" />
+          <AvatarFallback className="rounded-lg bg-black text-white text-xs p-1">
+            VA
+          </AvatarFallback>
+        </Avatar>
+        <div className="flex items-center gap-4">
+          <div className="text-black flex flex-col text-left text-sm leading-tight">
+            <span className="truncate text-xs font-semibold">valafso</span>
+            <span className="truncate text-xs">hello@valafso.com</span>
+          </div>
+          <DropdownMenu>
+            <DropdownMenuTrigger className="cursor-pointer">
+              <IconEllipsis />
+            </DropdownMenuTrigger>
+            <DropdownMenuContent
+              className="w-[--radix-dropdown-menu-trigger-width] min-w-56 rounded-lg"
+              side={isMobile ? "bottom" : "right"}
+              align="end"
+              sideOffset={4}
+            >
+              <DropdownMenuGroup>
+                <DropdownMenuItem>
+                  <Sparkles />
+                  Upgrade to Pro
+                </DropdownMenuItem>
+              </DropdownMenuGroup>
+              <DropdownMenuSeparator />
+              <DropdownMenuGroup>
+                <DropdownMenuItem>
+                  <BadgeCheck />
+                  Account
+                </DropdownMenuItem>
+                <DropdownMenuItem>
+                  <CreditCard />
+                  Billing
+                </DropdownMenuItem>
+                <DropdownMenuItem>
+                  <Bell />
+                  Notifications
+                </DropdownMenuItem>
+              </DropdownMenuGroup>
+              <DropdownMenuSeparator />
+              <DropdownMenuItem>
+                <LogOut />
+                Log out
+              </DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
+        </div>
+      </div>
     </>
   );
 };

@@ -19,11 +19,13 @@ import { useState } from "react";
 
 export const SelectCurrency = ({
   setCurrency,
+  current,
 }: {
+  current: string;
   setCurrency: (value: string) => void;
 }) => {
   const [open, setOpen] = useState(false);
-  const [value, setValue] = useState("");
+  const [value, setValue] = useState(current);
   const coins: { value: string; label: string }[] = [
     {
       value: "BTC",

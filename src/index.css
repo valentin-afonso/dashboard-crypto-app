@@ -78,7 +78,7 @@
   --sidebar-accent-foreground: oklch(0.205 0 0);
   --sidebar-border: oklch(0.922 0 0);
   --sidebar-ring: oklch(0.708 0 0);
-  --header-height: 100px;
+  --header-height: 80px;
 }
 
 .dark {
@@ -126,16 +126,19 @@
 
 #root {
   @apply md:grid min-h-screen;
-  grid-template-columns: 180px 1fr;
+  grid-template-columns: 240px 1fr;
   grid-template-rows: var(--header-height) 1fr;
 }
 #root > aside {
   grid-template-rows: var(--header-height) 1fr;
 }
 body {
-  @apply font-mono;
+  @apply max-h-screen overflow-hidden font-mono;
 }
-
+main {
+  max-height: calc(100vh - var(--header-height));
+  overflow-y: auto;
+}
 @font-face {
   font-family: "Geist Mono";
   src: url("./assets/fonts/GeistMono-Regular.woff2") format("woff2");
