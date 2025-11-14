@@ -143,6 +143,11 @@ main {
   max-height: calc(100vh - var(--header-height));
   overflow-y: auto;
 }
+::selection {
+  background-color: black;
+  color: white;
+}
+
 @font-face {
   font-family: "Geist Mono";
   src: url("./assets/fonts/GeistMono-Regular.woff2") format("woff2");
