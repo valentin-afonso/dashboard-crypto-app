@@ -11,6 +11,8 @@
 // Import Routes
 
 import { Route as rootRoute } from './routes/__root'
+import { Route as SignupImport } from './routes/signup'
+import { Route as SigninImport } from './routes/signin'
 import { Route as SettingsImport } from './routes/settings'
 import { Route as AboutImport } from './routes/about'
 import { Route as IndexImport } from './routes/index'
@@ -19,6 +21,18 @@ import { Route as CalcIndexImport } from './routes/calc/index'
 import { Route as CoinsCoinIdImport } from './routes/coins/$coinId'
 
 // Create/Update Routes
+
+const SignupRoute = SignupImport.update({
+  id: '/signup',
+  path: '/signup',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const SigninRoute = SigninImport.update({
+  id: '/signin',
+  path: '/signin',
+  getParentRoute: () => rootRoute,
+} as any)
 
 const SettingsRoute = SettingsImport.update({
   id: '/settings',
@@ -81,6 +95,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof SettingsImport
       parentRoute: typeof rootRoute
     }
+    '/signin': {
+      id: '/signin'
+      path: '/signin'
+      fullPath: '/signin'
+      preLoaderRoute: typeof SigninImport
+      parentRoute: typeof rootRoute
+    }
+    '/signup': {
+      id: '/signup'
+      path: '/signup'
+      fullPath: '/signup'
+      preLoaderRoute: typeof SignupImport
+      parentRoute: typeof rootRoute
+    }
     '/coins/$coinId': {
       id: '/coins/$coinId'
       path: '/coins/$coinId'
@@ -111,6 +139,8 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/settings': typeof SettingsRoute
+  '/signin': typeof SigninRoute
+  '/signup': typeof SignupRoute
   '/coins/$coinId': typeof CoinsCoinIdRoute
   '/calc': typeof CalcIndexRoute
   '/coins': typeof CoinsIndexRoute
@@ -120,6 +150,8 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/settings': typeof SettingsRoute
+  '/signin': typeof SigninRoute
+  '/signup': typeof SignupRoute
   '/coins/$coinId': typeof CoinsCoinIdRoute
   '/calc': typeof CalcIndexRoute
   '/coins': typeof CoinsIndexRoute
@@ -130,6 +162,8 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/settings': typeof SettingsRoute
+  '/signin': typeof SigninRoute
+  '/signup': typeof SignupRoute
   '/coins/$coinId': typeof CoinsCoinIdRoute
   '/calc/': typeof CalcIndexRoute
   '/coins/': typeof CoinsIndexRoute
@@ -141,16 +175,28 @@ export interface FileRouteTypes {
     | '/'
     | '/about'
     | '/settings'
+    | '/signin'
+    | '/signup'
     | '/coins/$coinId'
     | '/calc'
     | '/coins'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/about' | '/settings' | '/coins/$coinId' | '/calc' | '/coins'
+  to:
+    | '/'
+    | '/about'
+    | '/settings'
+    | '/signin'
+    | '/signup'
+    | '/coins/$coinId'
+    | '/calc'
+    | '/coins'
   id:
     | '__root__'
     | '/'
     | '/about'
     | '/settings'
+    | '/signin'
+    | '/signup'
     | '/coins/$coinId'
     | '/calc/'
     | '/coins/'
@@ -161,6 +207,8 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AboutRoute: typeof AboutRoute
   SettingsRoute: typeof SettingsRoute
+  SigninRoute: typeof SigninRoute
+  SignupRoute: typeof SignupRoute
   CoinsCoinIdRoute: typeof CoinsCoinIdRoute
   CalcIndexRoute: typeof CalcIndexRoute
   CoinsIndexRoute: typeof CoinsIndexRoute
@@ -170,6 +218,8 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AboutRoute: AboutRoute,
   SettingsRoute: SettingsRoute,
+  SigninRoute: SigninRoute,
+  SignupRoute: SignupRoute,
   CoinsCoinIdRoute: CoinsCoinIdRoute,
   CalcIndexRoute: CalcIndexRoute,
   CoinsIndexRoute: CoinsIndexRoute,
@@ -188,6 +238,8 @@ export const routeTree = rootRoute
         "/",
         "/about",
         "/settings",
+        "/signin",
+        "/signup",
         "/coins/$coinId",
         "/calc/",
         "/coins/"
@@ -201,6 +253,12 @@ export const routeTree = rootRoute
     },
     "/settings": {
       "filePath": "settings.tsx"
+    },
+    "/signin": {
+      "filePath": "signin.tsx"
+    },
+    "/signup": {
+      "filePath": "signup.tsx"
     },
     "/coins/$coinId": {
       "filePath": "coins/$coinId.tsx"

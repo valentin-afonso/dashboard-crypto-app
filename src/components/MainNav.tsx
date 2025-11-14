@@ -4,7 +4,6 @@ import { IconAbout } from "./svg/icon-about";
 import { IconCalc } from "./svg/icon-calc";
 import { NavUser } from "./nav-user";
 import { IconSettings } from "./svg/icon-settings";
-import { Button } from "./ui/button";
 export function MainNav() {
   return (
     <div className="row-2 flex flex-col justify-between p-2">
@@ -63,7 +62,12 @@ export function MainNav() {
           <p className="text-black/60 text-xs font-normal mb-2">FAVORITES</p>
           <div className="flex flex-col items-center justify-center gap-8 p-2 rounded-md bg-black/10">
             <p className="text-xs text-black/60">Log in for full access</p>
-            <Button className="w-full text-xs">Log in</Button>
+            <Link
+              to="/signin"
+              className="text-xs w-full text-center text-white bg-black rounded-md px-2.5 py-2 hover:bg-black/80"
+            >
+              Sign in
+            </Link>
           </div>
         </div>
       </div>

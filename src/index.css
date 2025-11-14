@@ -132,6 +132,10 @@
 #root > aside {
   grid-template-rows: var(--header-height) 1fr;
 }
+html,
+body {
+  font-size: 16px;
+}
 body {
   @apply max-h-screen overflow-hidden font-mono;
 }
