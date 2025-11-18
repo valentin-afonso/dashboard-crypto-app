@@ -9,8 +9,22 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Sparkles, BadgeCheck, CreditCard, Bell, LogOut } from "lucide-react";
 import { IconEllipsis } from "./svg/icon-ellipsis";
+
+import { createAuthClient } from "better-auth/react";
+const { useSession } = createAuthClient();
+
 export const NavUser = () => {
   const isMobile = false;
+  const {
+    data: session,
+    isPending, //loading state
+    error, //error object
+    refetch, //refetch the session
+  } = useSession();
+  if (isPending) return <div>Loading...</div>;
+  if (error) return <div>Error: {error.message}</div>;
+  if (!session) return <div>No session</div>;
+  // console.log(session);
   return (
     <>
       <div className="flex items-center gap-2 text-black max-w-full">
