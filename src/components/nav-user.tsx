@@ -19,7 +19,7 @@ export const NavUser = () => {
     data: session,
     isPending, //loading state
     error, //error object
-    refetch, //refetch the session
+    // refetch, //refetch the session
   } = useSession();
   if (isPending) return <div>Loading...</div>;
   if (error) return <div>Error: {error.message}</div>;
