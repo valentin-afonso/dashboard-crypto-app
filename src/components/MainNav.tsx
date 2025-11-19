@@ -4,7 +4,10 @@ import { IconAbout } from "./svg/icon-about";
 import { IconCalc } from "./svg/icon-calc";
 import { NavUser } from "./nav-user";
 import { IconSettings } from "./svg/icon-settings";
+import { authClient } from "@/lib/auth-client";
 export function MainNav() {
+  const { data: session } = authClient.useSession();
+
   return (
     <div className="row-2 flex flex-col justify-between p-2">
       <div className="flex flex-col gap-8">
@@ -60,18 +63,21 @@ export function MainNav() {
         </div>
         <div>
           <p className="text-black/60 text-xs font-normal mb-2">FAVORITES</p>
-          <div className="flex flex-col items-center justify-center gap-8 p-2 rounded-md bg-black/10">
-            <p className="text-xs text-black/60">Log in for full access</p>
-            <Link
-              to="/signin"
-              className="text-xs w-full text-center text-white bg-black rounded-md px-2.5 py-2 hover:bg-black/80"
-            >
-              Sign in
-            </Link>
-          </div>
+          {!session && (
+            <div className="flex flex-col items-center justify-center gap-8 p-2 rounded-md bg-black/10">
+              <p className="text-xs text-black/60">Log in for full access</p>
+              <Link
+                to="/signin"
+                className="text-xs w-full text-center text-white bg-black rounded-md px-2.5 py-2 hover:bg-black/80"
+              >
+                Sign in
+              </Link>
+            </div>
+          )}
         </div>
       </div>
-      <NavUser />
+
+      {session && <NavUser />}
     </div>
   );
 }
