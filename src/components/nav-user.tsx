@@ -21,16 +21,18 @@ export const NavUser = () => {
     error, //error object
     // refetch, //refetch the session
   } = useSession();
+
   if (isPending) return <div>Loading...</div>;
   if (error) return <div>Error: {error.message}</div>;
   if (!session) return <div>No session</div>;
-  // console.log(session);
+  console.log(session);
   return (
     <>
       <div className="flex items-center gap-2 text-black max-w-full">
         <Avatar className="h-6 w-6 rounded-full">
           <AvatarImage src="/avatars/shadcn.jpg" alt="valentin afso" />
           <AvatarFallback className="rounded-lg bg-black text-white text-xs p-1">
+            {session?.user?.name?.charAt(0)}
             VA
           </AvatarFallback>
         </Avatar>
