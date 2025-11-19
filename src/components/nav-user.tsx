@@ -9,13 +9,11 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Sparkles, BadgeCheck, CreditCard, Bell, LogOut } from "lucide-react";
 import { IconEllipsis } from "./svg/icon-ellipsis";
-
-import { createAuthClient } from "better-auth/react";
-const { useSession } = createAuthClient();
+import { authClient } from "@/lib/auth-client";
 
 export const NavUser = () => {
   const isMobile = false;
-  const { data: session } = useSession();
+  const { data: session } = authClient.useSession();
 
   return (
     <>
