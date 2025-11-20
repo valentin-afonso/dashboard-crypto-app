@@ -12,6 +12,13 @@ import { PriceCoin } from "@/components/blocs/coin/price-coin";
 import { ChartSparklineCoin } from "@/components/blocs/coin/chart-sparkline-coin";
 export const Route = createFileRoute("/coins/$coinId")({
   component: RouteComponent,
+  notFoundComponent: () => {
+    return (
+      <div className="text-black flex items-center justify-center h-full">
+        Coin not found
+      </div>
+    );
+  },
 });
 
 function RouteComponent() {
@@ -22,7 +29,6 @@ function RouteComponent() {
   });
   if (isLoading) return <div>Loading...</div>;
   if (error) return <div>Error: {error.message}</div>;
-  console.log(data);
 
   return (
     <div className="text-black grid grid-cols-1 md:grid-cols-2 h-full gap-4">

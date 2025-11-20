@@ -11,28 +11,21 @@
 // Import Routes
 
 import { Route as rootRoute } from './routes/__root'
-import { Route as SignupImport } from './routes/signup'
-import { Route as SigninImport } from './routes/signin'
 import { Route as SettingsImport } from './routes/settings'
 import { Route as AboutImport } from './routes/about'
+import { Route as AccountRouteImport } from './routes/account/route'
+import { Route as PathlessLayoutRouteImport } from './routes/_pathlessLayout/route'
 import { Route as IndexImport } from './routes/index'
 import { Route as CoinsIndexImport } from './routes/coins/index'
 import { Route as CalcIndexImport } from './routes/calc/index'
 import { Route as CoinsCoinIdImport } from './routes/coins/$coinId'
+import { Route as AccountPasswordImport } from './routes/account/password'
+import { Route as AccountLinkAccountImport } from './routes/account/link-account'
+import { Route as AccountGeneralImport } from './routes/account/general'
+import { Route as PathlessLayoutSignupImport } from './routes/_pathlessLayout/signup'
+import { Route as PathlessLayoutSigninImport } from './routes/_pathlessLayout/signin'
 
 // Create/Update Routes
-
-const SignupRoute = SignupImport.update({
-  id: '/signup',
-  path: '/signup',
-  getParentRoute: () => rootRoute,
-} as any)
-
-const SigninRoute = SigninImport.update({
-  id: '/signin',
-  path: '/signin',
-  getParentRoute: () => rootRoute,
-} as any)
 
 const SettingsRoute = SettingsImport.update({
   id: '/settings',
@@ -43,6 +36,17 @@ const SettingsRoute = SettingsImport.update({
 const AboutRoute = AboutImport.update({
   id: '/about',
   path: '/about',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const AccountRouteRoute = AccountRouteImport.update({
+  id: '/account',
+  path: '/account',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const PathlessLayoutRouteRoute = PathlessLayoutRouteImport.update({
+  id: '/_pathlessLayout',
   getParentRoute: () => rootRoute,
 } as any)
 
@@ -70,6 +74,36 @@ const CoinsCoinIdRoute = CoinsCoinIdImport.update({
   getParentRoute: () => rootRoute,
 } as any)
 
+const AccountPasswordRoute = AccountPasswordImport.update({
+  id: '/password',
+  path: '/password',
+  getParentRoute: () => AccountRouteRoute,
+} as any)
+
+const AccountLinkAccountRoute = AccountLinkAccountImport.update({
+  id: '/link-account',
+  path: '/link-account',
+  getParentRoute: () => AccountRouteRoute,
+} as any)
+
+const AccountGeneralRoute = AccountGeneralImport.update({
+  id: '/general',
+  path: '/general',
+  getParentRoute: () => AccountRouteRoute,
+} as any)
+
+const PathlessLayoutSignupRoute = PathlessLayoutSignupImport.update({
+  id: '/signup',
+  path: '/signup',
+  getParentRoute: () => PathlessLayoutRouteRoute,
+} as any)
+
+const PathlessLayoutSigninRoute = PathlessLayoutSigninImport.update({
+  id: '/signin',
+  path: '/signin',
+  getParentRoute: () => PathlessLayoutRouteRoute,
+} as any)
+
 // Populate the FileRoutesByPath interface
 
 declare module '@tanstack/react-router' {
@@ -79,6 +113,20 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexImport
+      parentRoute: typeof rootRoute
+    }
+    '/_pathlessLayout': {
+      id: '/_pathlessLayout'
+      path: ''
+      fullPath: ''
+      preLoaderRoute: typeof PathlessLayoutRouteImport
+      parentRoute: typeof rootRoute
+    }
+    '/account': {
+      id: '/account'
+      path: '/account'
+      fullPath: '/account'
+      preLoaderRoute: typeof AccountRouteImport
       parentRoute: typeof rootRoute
     }
     '/about': {
@@ -95,19 +143,40 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof SettingsImport
       parentRoute: typeof rootRoute
     }
-    '/signin': {
-      id: '/signin'
+    '/_pathlessLayout/signin': {
+      id: '/_pathlessLayout/signin'
       path: '/signin'
       fullPath: '/signin'
-      preLoaderRoute: typeof SigninImport
-      parentRoute: typeof rootRoute
+      preLoaderRoute: typeof PathlessLayoutSigninImport
+      parentRoute: typeof PathlessLayoutRouteImport
     }
-    '/signup': {
-      id: '/signup'
+    '/_pathlessLayout/signup': {
+      id: '/_pathlessLayout/signup'
       path: '/signup'
       fullPath: '/signup'
-      preLoaderRoute: typeof SignupImport
-      parentRoute: typeof rootRoute
+      preLoaderRoute: typeof PathlessLayoutSignupImport
+      parentRoute: typeof PathlessLayoutRouteImport
+    }
+    '/account/general': {
+      id: '/account/general'
+      path: '/general'
+      fullPath: '/account/general'
+      preLoaderRoute: typeof AccountGeneralImport
+      parentRoute: typeof AccountRouteImport
+    }
+    '/account/link-account': {
+      id: '/account/link-account'
+      path: '/link-account'
+      fullPath: '/account/link-account'
+      preLoaderRoute: typeof AccountLinkAccountImport
+      parentRoute: typeof AccountRouteImport
+    }
+    '/account/password': {
+      id: '/account/password'
+      path: '/password'
+      fullPath: '/account/password'
+      preLoaderRoute: typeof AccountPasswordImport
+      parentRoute: typeof AccountRouteImport
     }
     '/coins/$coinId': {
       id: '/coins/$coinId'
@@ -135,12 +204,46 @@ declare module '@tanstack/react-router' {
 
 // Create and export the route tree
 
+interface PathlessLayoutRouteRouteChildren {
+  PathlessLayoutSigninRoute: typeof PathlessLayoutSigninRoute
+  PathlessLayoutSignupRoute: typeof PathlessLayoutSignupRoute
+}
+
+const PathlessLayoutRouteRouteChildren: PathlessLayoutRouteRouteChildren = {
+  PathlessLayoutSigninRoute: PathlessLayoutSigninRoute,
+  PathlessLayoutSignupRoute: PathlessLayoutSignupRoute,
+}
+
+const PathlessLayoutRouteRouteWithChildren =
+  PathlessLayoutRouteRoute._addFileChildren(PathlessLayoutRouteRouteChildren)
+
+interface AccountRouteRouteChildren {
+  AccountGeneralRoute: typeof AccountGeneralRoute
+  AccountLinkAccountRoute: typeof AccountLinkAccountRoute
+  AccountPasswordRoute: typeof AccountPasswordRoute
+}
+
+const AccountRouteRouteChildren: AccountRouteRouteChildren = {
+  AccountGeneralRoute: AccountGeneralRoute,
+  AccountLinkAccountRoute: AccountLinkAccountRoute,
+  AccountPasswordRoute: AccountPasswordRoute,
+}
+
+const AccountRouteRouteWithChildren = AccountRouteRoute._addFileChildren(
+  AccountRouteRouteChildren,
+)
+
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '': typeof PathlessLayoutRouteRouteWithChildren
+  '/account': typeof AccountRouteRouteWithChildren
   '/about': typeof AboutRoute
   '/settings': typeof SettingsRoute
-  '/signin': typeof SigninRoute
-  '/signup': typeof SignupRoute
+  '/signin': typeof PathlessLayoutSigninRoute
+  '/signup': typeof PathlessLayoutSignupRoute
+  '/account/general': typeof AccountGeneralRoute
+  '/account/link-account': typeof AccountLinkAccountRoute
+  '/account/password': typeof AccountPasswordRoute
   '/coins/$coinId': typeof CoinsCoinIdRoute
   '/calc': typeof CalcIndexRoute
   '/coins': typeof CoinsIndexRoute
@@ -148,10 +251,15 @@ export interface FileRoutesByFullPath {
 
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '': typeof PathlessLayoutRouteRouteWithChildren
+  '/account': typeof AccountRouteRouteWithChildren
   '/about': typeof AboutRoute
   '/settings': typeof SettingsRoute
-  '/signin': typeof SigninRoute
-  '/signup': typeof SignupRoute
+  '/signin': typeof PathlessLayoutSigninRoute
+  '/signup': typeof PathlessLayoutSignupRoute
+  '/account/general': typeof AccountGeneralRoute
+  '/account/link-account': typeof AccountLinkAccountRoute
+  '/account/password': typeof AccountPasswordRoute
   '/coins/$coinId': typeof CoinsCoinIdRoute
   '/calc': typeof CalcIndexRoute
   '/coins': typeof CoinsIndexRoute
@@ -160,10 +268,15 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRoute
   '/': typeof IndexRoute
+  '/_pathlessLayout': typeof PathlessLayoutRouteRouteWithChildren
+  '/account': typeof AccountRouteRouteWithChildren
   '/about': typeof AboutRoute
   '/settings': typeof SettingsRoute
-  '/signin': typeof SigninRoute
-  '/signup': typeof SignupRoute
+  '/_pathlessLayout/signin': typeof PathlessLayoutSigninRoute
+  '/_pathlessLayout/signup': typeof PathlessLayoutSignupRoute
+  '/account/general': typeof AccountGeneralRoute
+  '/account/link-account': typeof AccountLinkAccountRoute
+  '/account/password': typeof AccountPasswordRoute
   '/coins/$coinId': typeof CoinsCoinIdRoute
   '/calc/': typeof CalcIndexRoute
   '/coins/': typeof CoinsIndexRoute
@@ -173,30 +286,45 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | ''
+    | '/account'
     | '/about'
     | '/settings'
     | '/signin'
     | '/signup'
+    | '/account/general'
+    | '/account/link-account'
+    | '/account/password'
     | '/coins/$coinId'
     | '/calc'
     | '/coins'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | ''
+    | '/account'
     | '/about'
     | '/settings'
     | '/signin'
     | '/signup'
+    | '/account/general'
+    | '/account/link-account'
+    | '/account/password'
     | '/coins/$coinId'
     | '/calc'
     | '/coins'
   id:
     | '__root__'
     | '/'
+    | '/_pathlessLayout'
+    | '/account'
     | '/about'
     | '/settings'
-    | '/signin'
-    | '/signup'
+    | '/_pathlessLayout/signin'
+    | '/_pathlessLayout/signup'
+    | '/account/general'
+    | '/account/link-account'
+    | '/account/password'
     | '/coins/$coinId'
     | '/calc/'
     | '/coins/'
@@ -205,10 +333,10 @@ export interface FileRouteTypes {
 
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  PathlessLayoutRouteRoute: typeof PathlessLayoutRouteRouteWithChildren
+  AccountRouteRoute: typeof AccountRouteRouteWithChildren
   AboutRoute: typeof AboutRoute
   SettingsRoute: typeof SettingsRoute
-  SigninRoute: typeof SigninRoute
-  SignupRoute: typeof SignupRoute
   CoinsCoinIdRoute: typeof CoinsCoinIdRoute
   CalcIndexRoute: typeof CalcIndexRoute
   CoinsIndexRoute: typeof CoinsIndexRoute
@@ -216,10 +344,10 @@ export interface RootRouteChildren {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  PathlessLayoutRouteRoute: PathlessLayoutRouteRouteWithChildren,
+  AccountRouteRoute: AccountRouteRouteWithChildren,
   AboutRoute: AboutRoute,
   SettingsRoute: SettingsRoute,
-  SigninRoute: SigninRoute,
-  SignupRoute: SignupRoute,
   CoinsCoinIdRoute: CoinsCoinIdRoute,
   CalcIndexRoute: CalcIndexRoute,
   CoinsIndexRoute: CoinsIndexRoute,
@@ -236,10 +364,10 @@ export const routeTree = rootRoute
       "filePath": "__root.tsx",
       "children": [
         "/",
+        "/_pathlessLayout",
+        "/account",
         "/about",
         "/settings",
-        "/signin",
-        "/signup",
         "/coins/$coinId",
         "/calc/",
         "/coins/"
@@ -248,17 +376,46 @@ export const routeTree = rootRoute
     "/": {
       "filePath": "index.tsx"
     },
+    "/_pathlessLayout": {
+      "filePath": "_pathlessLayout/route.tsx",
+      "children": [
+        "/_pathlessLayout/signin",
+        "/_pathlessLayout/signup"
+      ]
+    },
+    "/account": {
+      "filePath": "account/route.tsx",
+      "children": [
+        "/account/general",
+        "/account/link-account",
+        "/account/password"
+      ]
+    },
     "/about": {
       "filePath": "about.tsx"
     },
     "/settings": {
       "filePath": "settings.tsx"
     },
-    "/signin": {
-      "filePath": "signin.tsx"
+    "/_pathlessLayout/signin": {
+      "filePath": "_pathlessLayout/signin.tsx",
+      "parent": "/_pathlessLayout"
     },
-    "/signup": {
-      "filePath": "signup.tsx"
+    "/_pathlessLayout/signup": {
+      "filePath": "_pathlessLayout/signup.tsx",
+      "parent": "/_pathlessLayout"
+    },
+    "/account/general": {
+      "filePath": "account/general.tsx",
+      "parent": "/account"
+    },
+    "/account/link-account": {
+      "filePath": "account/link-account.tsx",
+      "parent": "/account"
+    },
+    "/account/password": {
+      "filePath": "account/password.tsx",
+      "parent": "/account"
     },
     "/coins/$coinId": {
       "filePath": "coins/$coinId.tsx"

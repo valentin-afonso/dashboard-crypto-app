@@ -5,6 +5,7 @@ import { IconCalc } from "./svg/icon-calc";
 import { NavUser } from "./nav-user";
 import { IconSettings } from "./svg/icon-settings";
 import { authClient } from "@/lib/auth-client";
+import { NavLink } from "./nav-link";
 export function MainNav() {
   const { data: session } = authClient.useSession();
 
@@ -16,31 +17,22 @@ export function MainNav() {
           <nav className="flex gap-2 text-black text-xs">
             <ul className="w-full flex flex-col gap-0.5">
               <li>
-                <Link
-                  to="/"
-                  className="[&.active]:bg-[#0c0a12] [&.active]:text-white rounded-sm px-2.5 py-2 hover:bg-white/50 w-full flex items-center gap-2"
-                >
+                <NavLink to="/">
                   <IconHome />
                   Home
-                </Link>
+                </NavLink>
               </li>
               <li>
-                <Link
-                  to="/about"
-                  className="[&.active]:bg-[#0c0a12] [&.active]:text-white rounded-sm px-2.5 py-2 hover:bg-white/50 w-full flex items-center gap-2"
-                >
+                <NavLink to="/about">
                   <IconAbout />
                   About
-                </Link>
+                </NavLink>
               </li>
               <li>
-                <Link
-                  to="/calc"
-                  className="[&.active]:bg-[#0c0a12] [&.active]:text-white rounded-sm px-2.5 py-2 hover:bg-white/50 w-full flex items-center gap-2"
-                >
+                <NavLink to="/calc">
                   <IconCalc />
                   Exchange
-                </Link>
+                </NavLink>
               </li>
             </ul>
           </nav>
@@ -50,13 +42,16 @@ export function MainNav() {
           <nav className="flex gap-2 text-black text-xs">
             <ul className="w-full flex flex-col gap-0.5">
               <li>
-                <Link
-                  to="/settings"
-                  className="[&.active]:bg-[#0c0a12] [&.active]:text-white rounded-sm px-2.5 py-2 hover:bg-white/50 w-full flex items-center gap-2"
-                >
+                <NavLink to="/settings">
                   <IconSettings />
                   Settings
-                </Link>
+                </NavLink>
+              </li>
+              <li>
+                <NavLink to="/account">
+                  <IconSettings />
+                  My account
+                </NavLink>
               </li>
             </ul>
           </nav>
