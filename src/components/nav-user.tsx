@@ -7,14 +7,24 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { Sparkles, BadgeCheck, CreditCard, Bell, LogOut } from "lucide-react";
+import { BadgeCheck, LogOut } from "lucide-react";
 import { IconEllipsis } from "./svg/icon-ellipsis";
 import { authClient } from "@/lib/auth-client";
+import { useNavigate } from "@tanstack/react-router";
 
 export const NavUser = () => {
   const isMobile = false;
   const { data: session } = authClient.useSession();
-
+  const navigate = useNavigate();
+  const handleSignOut = async () => {
+    await authClient.signOut({
+      fetchOptions: {
+        onSuccess: () => {
+          navigate({ to: "/signin" });
+        },
+      },
+    });
+  };
   return (
     <>
       <div className="flex items-center gap-2 text-black max-w-full">
@@ -45,27 +55,12 @@ export const NavUser = () => {
             >
               <DropdownMenuGroup>
                 <DropdownMenuItem>
-                  <Sparkles />
-                  Upgrade to Pro
-                </DropdownMenuItem>
-              </DropdownMenuGroup>
-              <DropdownMenuSeparator />
-              <DropdownMenuGroup>
-                <DropdownMenuItem>
                   <BadgeCheck />
                   Account
                 </DropdownMenuItem>
-                <DropdownMenuItem>
-                  <CreditCard />
-                  Billing
-                </DropdownMenuItem>
-                <DropdownMenuItem>
-                  <Bell />
-                  Notifications
-                </DropdownMenuItem>
               </DropdownMenuGroup>
               <DropdownMenuSeparator />
-              <DropdownMenuItem>
+              <DropdownMenuItem onClick={handleSignOut}>
                 <LogOut />
                 Log out
               </DropdownMenuItem>

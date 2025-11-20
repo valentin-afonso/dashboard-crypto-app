@@ -76,7 +76,6 @@ export function MainNav() {
           )}
         </div>
       </div>
-
       {session && <NavUser />}
     </div>
   );
