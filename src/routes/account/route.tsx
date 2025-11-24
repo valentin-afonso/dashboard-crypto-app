@@ -16,7 +16,7 @@ function RouteComponent() {
           <DynamicBreadcrumb />
         </div>
 
-        <div className="p-4 grow">
+        <div className="grow">
           <Outlet />
         </div>
       </div>

@@ -68,9 +68,9 @@ export const ChartSParklineTeaser = ({
       <p className="text-2xl font-bold pl-4 pt-2">
         {!error && `$${data.prices[data.prices.length - 1][1].toFixed(2)}`}
         {error && (
-          <div className="text-red-500 bg-red-200 border border-red-500 rounded-2xl w-max text-xs font-normal px-2">
+          <span className="text-red-500 bg-red-200 border border-red-500 rounded-2xl w-max text-xs font-normal px-2">
             error
-          </div>
+          </span>
         )}
       </p>
       <ChartContainer config={chartConfig} className="min-h-[100px]">

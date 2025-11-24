@@ -1,52 +1,41 @@
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
 import { authClient } from "@/lib/auth-client";
 import { createFileRoute } from "@tanstack/react-router";
+import { DeleteAccount } from "@/components/delete-account";
+import { ChangeEmail } from "@/components/change-email";
+import { UpdateAccountGeneral } from "@/components/update-account-general";
+import { Switch } from "@/components/ui/switch";
+import { useState } from "react";
 
 export const Route = createFileRoute("/account/general")({
   component: RouteComponent,
 });
 
 function RouteComponent() {
+  const [isEdit, setIsEdit] = useState(false);
   const { data: session } = authClient.useSession();
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-  };
+
   return (
     <div className="h-full flex flex-col">
-      <p className="text-right text-black/50 text-xs">
-        createdAt: {session?.user?.createdAt?.toString()}
-      </p>
-      <form
-        onSubmit={handleSubmit}
-        className="flex flex-col gap-4 max-w-[27rem] pb-4 flex-1"
-      >
-        <div>
-          <p>Email</p>
-          <Input
-            type="email"
-            id="email"
-            name="email"
-            value={session?.user?.email}
+      <div className="flex flex-col grow p-4">
+        <div className="flex items-center space-x-2">
+          <Switch
+            id="edit-account"
+            checked={isEdit}
+            onCheckedChange={setIsEdit}
           />
+          <label htmlFor="edit-account" className="text-sm">
+            Edit
+          </label>
         </div>
-        <div>
-          <p>Name</p>
-          <Input
-            type="text"
-            id="name"
-            name="name"
-            value={session?.user?.name}
-          />
+        <p className="text-right text-black/50 text-xs">
+          createdAt: {session?.user?.createdAt?.toString()}
+        </p>
+        <div className="flex flex-col gap-4 max-w-[27rem] pb-4 flex-1">
+          <ChangeEmail email={session?.user?.email} isEdit={isEdit} />
+          <UpdateAccountGeneral name={session?.user?.name} isEdit={isEdit} />
         </div>
-        <Button type="submit">Save</Button>
-      </form>
-      <div className="border-t border-color-border pt-4 flex justify-between items-center">
-        <p>Delete account</p>
-        <Button variant="destructive" type="button">
-          Delete account
-        </Button>
       </div>
+      <DeleteAccount />
     </div>
   );
 }

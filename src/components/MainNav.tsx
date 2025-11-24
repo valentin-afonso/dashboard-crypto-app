@@ -6,6 +6,7 @@ import { NavUser } from "./nav-user";
 import { IconSettings } from "./svg/icon-settings";
 import { authClient } from "@/lib/auth-client";
 import { NavLink } from "./nav-link";
+import { IconAccountGeneral } from "./svg/icon-acccount-general";
 export function MainNav() {
   const { data: session } = authClient.useSession();
 
@@ -49,7 +50,7 @@ export function MainNav() {
               </li>
               <li>
                 <NavLink to="/account">
-                  <IconSettings />
+                  <IconAccountGeneral />
                   My account
                 </NavLink>
               </li>
