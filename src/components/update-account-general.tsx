@@ -11,7 +11,7 @@ export const UpdateAccountGeneral = ({
   name: string | undefined;
   isEdit: boolean;
 }) => {
-  const [newName, setNewName] = useState("");
+  const [newName, setNewName] = useState(name || "");
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     await authClient.updateUser(
@@ -38,7 +38,7 @@ export const UpdateAccountGeneral = ({
             type="text"
             id="name"
             name="name"
-            value={name}
+            value={newName}
             onChange={(e) => setNewName(e.target.value)}
             disabled={!isEdit}
           />

@@ -11,7 +11,7 @@ export const ChangeEmail = ({
   email: string | undefined;
   isEdit: boolean;
 }) => {
-  const [newEmail, setNewEmail] = useState("");
+  const [newEmail, setNewEmail] = useState(email || "");
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     await authClient.changeEmail(
@@ -39,7 +39,7 @@ export const ChangeEmail = ({
             type="email"
             id="email"
             name="email"
-            value={email}
+            value={newEmail}
             onChange={(e) => setNewEmail(e.target.value)}
             disabled={!isEdit}
           />
