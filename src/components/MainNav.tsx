@@ -7,6 +7,7 @@ import { IconSettings } from "./svg/icon-settings";
 import { authClient } from "@/lib/auth-client";
 import { NavLink } from "./nav-link";
 import { IconAccountGeneral } from "./svg/icon-acccount-general";
+import { LinkAddToFav } from "./link-addtofav";
 export function MainNav() {
   const { data: session } = authClient.useSession();
 
@@ -59,18 +60,21 @@ export function MainNav() {
         </div>
         <div>
           <p className="text-black/60 text-xs font-normal mb-2">FAVORITES</p>
-          {!session && (
-            <div className="flex flex-col items-center justify-center gap-8 p-2 rounded-md bg-black/10">
-              <p className="text-xs text-black/60">Log in for full access</p>
-              <Link
-                to="/signin"
-                className="text-xs w-full text-center text-white bg-black rounded-md px-2.5 py-2 hover:bg-black/80"
-              >
-                Sign in
-              </Link>
-            </div>
-          )}
+          <LinkAddToFav />
         </div>
+      </div>
+      <div>
+        {!session && (
+          <div className="flex flex-col items-center justify-center gap-8 p-2 rounded-md bg-black/10">
+            <p className="text-xs text-black/60">Log in for full access</p>
+            <Link
+              to="/signin"
+              className="text-xs w-full text-center text-white bg-black rounded-md px-2.5 py-2 hover:bg-black/80"
+            >
+              Sign in
+            </Link>
+          </div>
+        )}
       </div>
       {session && <NavUser />}
     </div>
