@@ -7,10 +7,13 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { BadgeCheck, LogOut } from "lucide-react";
+
 import { IconEllipsis } from "./svg/icon-ellipsis";
 import { authClient } from "@/lib/auth-client";
-import { useNavigate } from "@tanstack/react-router";
+import { Link, useNavigate } from "@tanstack/react-router";
+
+import { IconAccountGeneral } from "./svg/icon-acccount-general";
+import { LogOut } from "lucide-react";
 
 export const NavUser = () => {
   const isMobile = false;
@@ -27,14 +30,14 @@ export const NavUser = () => {
   };
   return (
     <>
-      <div className="flex items-center gap-2 text-black max-w-full">
-        <Avatar className="h-6 w-6 rounded-full">
+      <div className="flex items-center gap-3 text-black max-w-full">
+        <Avatar className="h-9 w-9 rounded-full">
           <AvatarImage src="/avatars/shadcn.jpg" alt="valentin afso" />
           <AvatarFallback className="rounded-lg bg-black text-white text-xs p-1">
             {session?.user?.name?.charAt(0)}
           </AvatarFallback>
         </Avatar>
-        <div className="flex items-center gap-4">
+        <div className="flex items-center justify-between gap-4 grow">
           <div className="text-black flex flex-col text-left text-sm leading-tight">
             <span className="truncate text-xs font-semibold">
               {session && <>{session?.user?.name}</>}
@@ -55,8 +58,13 @@ export const NavUser = () => {
             >
               <DropdownMenuGroup>
                 <DropdownMenuItem>
-                  <BadgeCheck />
-                  Account
+                  <Link
+                    to="/account/general"
+                    className="flex items-center gap-2 w-full"
+                  >
+                    <IconAccountGeneral />
+                    My account
+                  </Link>
                 </DropdownMenuItem>
               </DropdownMenuGroup>
               <DropdownMenuSeparator />

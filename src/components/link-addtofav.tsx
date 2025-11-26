@@ -1,19 +1,14 @@
 import { IconAdd } from "./svg/icon-add";
-import {
-  Dialog,
-  DialogTrigger,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-  DialogDescription,
-  DialogFooter,
-  DialogClose,
-} from "@/components/ui/dialog";
+import { Dialog, DialogTrigger, DialogContent } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
-import { Link } from "@tanstack/react-router";
+import { authClient } from "@/lib/auth-client";
+import { DialogSignin } from "./dialog-signin";
+import { DialogFav } from "./dialog-fav";
+
 export const LinkAddToFav = () => {
+  const { data: session } = authClient.useSession();
   return (
-    <div>
+    <>
       <Dialog>
         <form>
           <DialogTrigger asChild>
@@ -25,28 +20,10 @@ export const LinkAddToFav = () => {
             </Button>
           </DialogTrigger>
           <DialogContent className="sm:max-w-[425px] text-black">
-            <DialogHeader>
-              <DialogTitle>
-                You need to be logged in to add to favorites
-              </DialogTitle>
-              <DialogDescription>
-                Please sign in to your account to add links to your favorites.
-              </DialogDescription>
-            </DialogHeader>
-            <div className="grid gap-4"></div>
-            <DialogFooter>
-              <DialogClose asChild>
-                <Button variant="outline">Cancel</Button>
-              </DialogClose>
-              <DialogClose asChild>
-                <Button asChild>
-                  <Link to="/signin">Sign in</Link>
-                </Button>
-              </DialogClose>
-            </DialogFooter>
+            {!session ? <DialogSignin /> : <DialogFav />}
           </DialogContent>
         </form>
       </Dialog>
-    </div>
+    </>
   );
 };
