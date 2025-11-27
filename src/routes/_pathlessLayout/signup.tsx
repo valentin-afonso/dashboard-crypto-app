@@ -1,9 +1,4 @@
-import {
-  createFileRoute,
-  Link,
-  useNavigate,
-  redirect,
-} from "@tanstack/react-router";
+import { createFileRoute, Link, redirect } from "@tanstack/react-router";
 import { Title } from "@/components/title";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
@@ -30,14 +25,16 @@ function RouteComponent() {
   const [name, setName] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [confirmPassword, setConfirmPassword] = useState("");
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    setIsLoading(true);
     if (password !== confirmPassword) {
-      alert("Passwords do not match");
+      toast.error("Passwords do not match");
+      setIsLoading(false);
       return;
     }
-    setIsLoading(true);
+
     type ErrorTypes = Partial<
       Record<
         keyof typeof authClient.$ERROR_CODES,
@@ -60,40 +57,28 @@ function RouteComponent() {
       return "";
     };
 
-    try {
-      const { data, error } = await authClient.signUp.email(
-        { email, password, name },
-        {
-          onSuccess: () => {
-            navigate({ to: "/" });
-          },
-          onError: (error) => {
-            console.error("onError callback:", error);
-            toast.error("Failed to sign up");
-            setIsLoading(false);
-          },
-        }
-      );
+    const { error } = await authClient.signUp.email(
+      { email, password, name, callbackURL: "/" },
+      {
+        onError: () => {
+          // console.error("onError callback:", error);
+          toast.error("Failed to sign up");
 
-      if (error) {
-        // Handle specific error cases
-        if (error.code) {
-          const message = getErrorMessage(error.code, "en");
-          if (message) {
-            alert(message);
-          }
-        } else {
-          alert(error.message || "An error occurred during signup");
-        }
-        return;
+          setIsLoading(false);
+        },
       }
+    );
 
-      if (data) {
-        console.log("Signup success:", data);
+    if (error) {
+      if (error.code) {
+        const message = getErrorMessage(error.code, "en");
+        if (message) {
+          toast.error(message);
+        }
+      } else {
+        toast.error(error.message || "An error occurred during signup");
       }
-    } catch (err) {
-      console.error("Unexpected error:", err);
-      alert("An unexpected error occurred. Please try again.");
+      return;
     }
   };
 

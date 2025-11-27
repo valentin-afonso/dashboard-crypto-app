@@ -1,13 +1,9 @@
-import {
-  createFileRoute,
-  Link,
-  useNavigate,
-  redirect,
-} from "@tanstack/react-router";
+import { createFileRoute, Link, redirect } from "@tanstack/react-router";
 import { Title } from "@/components/title";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Spinner } from "@/components/ui/spinner";
+import { Checkbox } from "@/components/ui/checkbox";
 import { useState } from "react";
 
 import { authClient } from "@/lib/auth-client";
@@ -29,32 +25,64 @@ function RouteComponent() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [isLoading, setIsLoading] = useState(false);
-  const navigate = useNavigate();
+  const [rememberMe, setRememberMe] = useState(false);
+  // const [inputs, setInputs] = useState({});
+  // const navigate = useNavigate();
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setIsLoading(true);
-    const { data, error } = await authClient.signIn.email(
+    if (!email || !password) {
+      toast.error("Please fill in all fields");
+      setIsLoading(false);
+      return;
+    }
+    type ErrorTypes = Partial<
+      Record<
+        keyof typeof authClient.$ERROR_CODES,
+        {
+          en: string;
+          es: string;
+        }
+      >
+    >;
+    const errorCodes = {
+      INVALID_EMAIL_OR_PASSWORD: {
+        en: "invalid email or password",
+        es: "usuario ya registrada",
+      },
+    } satisfies ErrorTypes;
+    const getErrorMessage = (code: string, lang: "en" | "es") => {
+      if (code in errorCodes) {
+        return errorCodes[code as keyof typeof errorCodes][lang];
+      }
+      return "";
+    };
+    const { error } = await authClient.signIn.email(
       {
         email,
         password,
+        rememberMe: rememberMe,
+        callbackURL: "/",
       },
       {
-        onSuccess: () => {
-          navigate({ to: "/" });
-        },
-        onError: (error) => {
-          console.error("onError callback:", error);
+        onError: () => {
           toast.error("Failed to sign in");
           setIsLoading(false);
         },
       }
     );
     if (error) {
-      console.error("onError callback:", error);
-    }
-    if (data) {
-      console.log("Signin success:", data);
+      if (error.code) {
+        const message = getErrorMessage(error.code, "en");
+        if (message) {
+          toast.error(message);
+        }
+      } else {
+        toast.error(error.message || "An error occurred during signin");
+      }
+      setIsLoading(false);
+      // console.error("onError callback:", error);
     }
   };
   return (
@@ -87,6 +115,17 @@ function RouteComponent() {
               value={password}
               onChange={(e) => setPassword(e.target.value)}
             />
+          </div>
+          <div className="flex items-center gap-2">
+            <Checkbox
+              id="rememberMe"
+              name="rememberMe"
+              onCheckedChange={() => setRememberMe(!rememberMe)}
+              checked={rememberMe}
+            />
+            <label htmlFor="rememberMe" className="text-black/60 text-sm">
+              Remember me
+            </label>
           </div>
           <Button type="submit" disabled={isLoading}>
             {isLoading && <Spinner />}
