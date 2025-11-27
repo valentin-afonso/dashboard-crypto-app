@@ -49,12 +49,14 @@ export function MainNav() {
                   Settings
                 </NavLink>
               </li>
-              <li>
-                <NavLink to="/account">
-                  <IconAccountGeneral />
-                  My account
-                </NavLink>
-              </li>
+              {session && (
+                <li>
+                  <NavLink to="/account">
+                    <IconAccountGeneral />
+                    My account
+                  </NavLink>
+                </li>
+              )}
             </ul>
           </nav>
         </div>
