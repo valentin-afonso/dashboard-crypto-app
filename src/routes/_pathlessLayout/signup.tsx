@@ -9,6 +9,8 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { useState } from "react";
 import { authClient } from "@/lib/auth-client";
+import { toast } from "sonner";
+import { Spinner } from "@/components/ui/spinner";
 
 export const Route = createFileRoute("/_pathlessLayout/signup")({
   beforeLoad: async () => {
@@ -26,6 +28,7 @@ function RouteComponent() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [name, setName] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
   const [confirmPassword, setConfirmPassword] = useState("");
   const navigate = useNavigate();
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -34,7 +37,7 @@ function RouteComponent() {
       alert("Passwords do not match");
       return;
     }
-
+    setIsLoading(true);
     type ErrorTypes = Partial<
       Record<
         keyof typeof authClient.$ERROR_CODES,
@@ -66,6 +69,8 @@ function RouteComponent() {
           },
           onError: (error) => {
             console.error("onError callback:", error);
+            toast.error("Failed to sign up");
+            setIsLoading(false);
           },
         }
       );
@@ -143,7 +148,10 @@ function RouteComponent() {
               onChange={(e) => setConfirmPassword(e.target.value)}
             />
           </div>
-          <Button type="submit">Sign up</Button>
+          <Button type="submit" disabled={isLoading}>
+            {isLoading && <Spinner />}
+            Sign up
+          </Button>
         </form>
       </div>
       <div className="px-8 py-4 border-t border-color-border flex justify-end">

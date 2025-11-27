@@ -44,6 +44,11 @@ export const ChartSParklineTeaser = ({
   const { data, isLoading, error } = useQuery({
     queryKey: ["coinMarket", selectedCoin, selectedDays],
     queryFn: () => fetchCoinMarket(selectedCoin, selectedDays),
+    staleTime: 1000 * 60 * 5, // 5 minutes
+    retry: (failureCount, error) => {
+      if ((error as { status?: number })?.status === 429) return false;
+      return failureCount < 3;
+    },
   });
 
   if (isLoading) return <CoinTEaserSkeleton />;

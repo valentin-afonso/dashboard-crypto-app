@@ -7,9 +7,11 @@ import {
 import { Title } from "@/components/title";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
+import { Spinner } from "@/components/ui/spinner";
 import { useState } from "react";
 
 import { authClient } from "@/lib/auth-client";
+import { toast } from "sonner";
 
 export const Route = createFileRoute("/_pathlessLayout/signin")({
   beforeLoad: async () => {
@@ -26,9 +28,12 @@ export const Route = createFileRoute("/_pathlessLayout/signin")({
 function RouteComponent() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
+
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    setIsLoading(true);
     const { data, error } = await authClient.signIn.email(
       {
         email,
@@ -40,6 +45,8 @@ function RouteComponent() {
         },
         onError: (error) => {
           console.error("onError callback:", error);
+          toast.error("Failed to sign in");
+          setIsLoading(false);
         },
       }
     );
@@ -81,7 +88,10 @@ function RouteComponent() {
               onChange={(e) => setPassword(e.target.value)}
             />
           </div>
-          <Button type="submit">Sign in</Button>
+          <Button type="submit" disabled={isLoading}>
+            {isLoading && <Spinner />}
+            Sign in
+          </Button>
         </form>
       </div>
       <div className="px-8 py-4 border-t border-color-border flex justify-end">
